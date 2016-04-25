@@ -2,9 +2,33 @@
 
 {% block title %}{{ product }}{% endblock %}
 
+{% block breadcrumbs %}
+    <a href="/">Home</a> |
+    <a href="{% url 'products:index' %}">Products</a> |
+    {{ product.name }}
+{% endblock %}
+
 {% block content %}
-    <h1>{{ product.name }}</h1>
-    <h2>{{ product.price }}</h2>
+    <h1>{{ product.name }} - {{ product.price }}</h1>
     <p>{{ product.description }}</p>
 
+    <h2>Your Comment</h2>
+    <form method="POST" action=".">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+
+    <div>
+        <h2>Comments:</h2>
+        {% for comment in product.last_comments %}
+            <div>
+                <p>{{ comment.username }} ({{ comment.created_at }})</p>
+                <p>{{ comment.text }}</p>
+                {% if not forloop.last %}
+                    <hr/>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

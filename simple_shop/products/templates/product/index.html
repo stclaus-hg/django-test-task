@@ -2,6 +2,12 @@
 
 {% block title %}Products{% endblock %}
 
+{% block breadcrumbs %}
+    <a href="/">Home</a> |
+    Products
+{% endblock %}
+
+
 {% block content %}
     {% if products %}
         <dl class="products">
@@ -11,6 +17,6 @@
             {% endfor %}
         </dl>
     {% else %}
-        <h3>Not products. You can add new product on <a href="#">admin page</a></h3>
+        <h3>No products. You can add new product on <a href="{% url 'admin:' %}">admin page</a></h3>
     {% endif %}
 {% endblock %}
