@@ -1,0 +1,16 @@
+{% extends "product/base.html" %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+    {% if products %}
+        <dl class="products">
+            {% for product in products %}
+                <dt><a href="{% url 'products:detail' product.slug %}">{{ product.name }}</a> - {{ product.price }}</dt>
+                <dd>{{ product.description }}</dd>
+            {% endfor %}
+        </dl>
+    {% else %}
+        <h3>Not products. You can add new product on <a href="#">admin page</a></h3>
+    {% endif %}
+{% endblock %}
