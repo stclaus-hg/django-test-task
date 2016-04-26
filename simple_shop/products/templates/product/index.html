@@ -10,9 +10,13 @@
 
 {% block content %}
     {% if products %}
+        <div>Sort by: <a href="?sort=name">Name</a> | <a href="?sort=price">Price</a> | <a href="?sort=likes">Likes</a></div>
         <dl class="products">
             {% for product in products %}
-                <dt><a href="{% url 'products:detail' product.slug %}">{{ product.name }}</a> - {{ product.price }}</dt>
+                <dt>
+                    <a href="{% url 'products:detail' product.slug %}">{{ product.name }}</a>
+                    - {{ product.price }} (Likes: {{ product.likes }})
+                </dt>
                 <dd>{{ product.description }}</dd>
             {% endfor %}
         </dl>

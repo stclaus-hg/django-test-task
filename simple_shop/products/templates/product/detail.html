@@ -10,6 +10,12 @@
 
 {% block content %}
     <h1>{{ product.name }} - {{ product.price }}</h1>
+    Likes: {{ product.likes }} |
+    {% if user.is_authenticated %}
+        <a href="{% url 'products:like' product.slug %}">Like</a>
+    {% else %}
+        Please <a href="">login</a> to like the product
+    {% endif %}
     <p>{{ product.description }}</p>
 
     <h2>Your Comment</h2>

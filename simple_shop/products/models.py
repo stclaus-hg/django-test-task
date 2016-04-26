@@ -5,6 +5,8 @@ from datetime import timedelta
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils import timezone
+from django.contrib.auth.models import User
+
 
 @python_2_unicode_compatible
 class Product(models.Model):
@@ -29,6 +31,12 @@ class Product(models.Model):
         period_limit = timezone.now()-timedelta(hours=24)
         return self.productcomment_set.filter(created_at__gte=period_limit).order_by("-created_at")
 
+    def likes_count(self):
+        return self.productlike_set.count()
+
+    def is_liked(self, user):
+        return self.productlike_set.filter(user=user).count()
+
 
 @python_2_unicode_compatible
 class ProductComment(models.Model):
@@ -42,3 +50,16 @@ class ProductComment(models.Model):
 
     def __str__(self):
         return '<%s: %s>' % (self.username, self.test[:30])
+
+
+@python_2_unicode_compatible
+class ProductLike(models.Model):
+    user = models.ForeignKey(User)
+    product = models.ForeignKey(Product)
+    created_at = models.DateField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'product_likes'
+
+    def __str__(self):
+        return '<%s: %s>' % (self.product, self.user)
