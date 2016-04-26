@@ -14,8 +14,8 @@ class Product(models.Model):
     slug = models.SlugField(max_length=20, unique=True, db_index=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=7, decimal_places=2)
-    created_at = models.DateField(auto_now_add=True)
-    modified_at = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'products'
@@ -43,13 +43,13 @@ class ProductComment(models.Model):
     product = models.ForeignKey(Product)
     username = models.CharField(max_length=30, verbose_name='Your name')
     text = models.TextField(verbose_name='Comment')
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'product_comments'
 
     def __str__(self):
-        return '<%s: %s>' % (self.username, self.test[:30])
+        return '<%s: %s>' % (self.username, self.text[:30])
 
 
 @python_2_unicode_compatible
